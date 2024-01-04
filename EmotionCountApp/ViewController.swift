@@ -14,7 +14,15 @@ class ViewController: UIViewController {
     @IBOutlet var labels: [UILabel]!
     
     let emotionImageList = ["slime1", "slime2", "slime3", "slime4", "slime5", "slime6", "slime7", "slime8", "slime9"]
-    var cntList = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var cntList = [UserDefaults.standard.integer(forKey: "emotion0"),
+                   UserDefaults.standard.integer(forKey: "emotion1"),
+                   UserDefaults.standard.integer(forKey: "emotion2"),
+                   UserDefaults.standard.integer(forKey: "emotion3"),
+                   UserDefaults.standard.integer(forKey: "emotion4"),
+                   UserDefaults.standard.integer(forKey: "emotion5"),
+                   UserDefaults.standard.integer(forKey: "emotion6"),
+                   UserDefaults.standard.integer(forKey: "emotion7"),
+                   UserDefaults.standard.integer(forKey: "emotion8")]
     var labelList = ["행복해", "사랑해", "좋아해", "당황해", "속상해", "우울해", "심심해", "지루해", "쓸쓸해"]
     
     override func viewDidLoad() {
@@ -31,8 +39,11 @@ class ViewController: UIViewController {
         for i in labels {
             if i.tag == sender.view!.tag {
                 let n = i.tag
-                cntList[n] += 1
-                i.text = "\(labelList[n]) \(cntList[n])"
+                let value = UserDefaults.standard.integer(forKey: "emotion\(n)")
+                UserDefaults.standard.set(value + 1, forKey: "emotion\(n)")
+                i.text = "\(labelList[n]) \(UserDefaults.standard.integer(forKey: "emotion\(n)"))"
+//                cntList[n] += 1
+//                i.text = "\(labelList[n]) \(cntList[n])"
             }
         }
     }
