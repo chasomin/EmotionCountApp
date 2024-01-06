@@ -65,15 +65,21 @@ class ViewController: UIViewController {
     
     func designNavigationItem() {
         navigationItem.title = "감정 다이어리"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(leftButtonClicked))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(leftButtonClicked))
         navigationItem.leftBarButtonItem?.tintColor = .black
     }
     
     @objc
     func leftButtonClicked() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "다시 시작하기", message: "감정 횟수를 초기화하시겠습니까?", preferredStyle: .alert)
         let button1 = UIAlertAction(title: "취소", style: .cancel)
-        let button2 = UIAlertAction(title: "확인", style: .default)
+        let button2 = UIAlertAction(title: "확인", style: .default) {_ in 
+            
+            for i in 0..<self.labels.count {
+                self.labels[i].text = "\(self.labelList[i]) 0"
+                UserDefaults.standard.set(0, forKey: "emotion\(i)")
+            }
+        }
         alert.addAction(button1)
         alert.addAction(button2)
         present(alert, animated: true)
